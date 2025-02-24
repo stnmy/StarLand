@@ -1,10 +1,13 @@
-import { BaseQueryApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError, BaseQueryFn } from "@reduxjs/toolkit/query";
+import { FetchArgs, fetchBaseQuery, FetchBaseQueryError, BaseQueryFn } from "@reduxjs/toolkit/query";
 import { startLoading, stopLoading } from "../layout/uiSlice";
 import { toast } from "react-toastify";
+import { router } from "../routes/Routes";
 
 const customBaseQuery = fetchBaseQuery({
   baseUrl: 'https://localhost:5001/api'
 });
+
+type ErrorResponse = | string | {title: string} | {errors : string[]}
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -18,19 +21,40 @@ export const baseQueryWithErrorHandling: BaseQueryFn<string | FetchArgs, unknown
   const result = await customBaseQuery(args, api, extraOptions);
   api.dispatch(stopLoading());
   if (result.error) {
+    let originalStatus;
+    if (result.error.status === 'PARSING_ERROR' && result.error.originalStatus) {
+      originalStatus = result.error.originalStatus;
+    } else {
+      originalStatus = result.error.status;
+    }
 
-    const { status, data } = result.error;
+
+    const responseData = result.error.data as ErrorResponse;
+
     console.log(result.error)
-    switch (status) {
+    switch (originalStatus) {
       case 400:
-        toast.error(data as string)
+        if (typeof responseData === 'string') toast.error(responseData);
+        else if ('errors' in responseData){
+          throw Object.values(responseData.errors).flat().join(',')
+        }else{
+          toast.error(responseData.title);
+        }
         break;
 
       case 401:
-        toast.error(data.title)
+        if(typeof responseData === 'object' && 'title' in responseData)
+          toast.error(responseData.title)
         break;
+
       case 404:
-        toast.error(data.title)
+        if(typeof responseData === 'object' && 'title' in responseData)
+          router.navigate('/not-found')
+        break;
+
+      case 500:
+        if(typeof responseData === 'object')
+          router.navigate('/server-error', {state: {error: responseData}})
         break;
     
       default:
