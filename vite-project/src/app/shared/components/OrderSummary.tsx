@@ -7,7 +7,7 @@ import {
   Paper,
 } from "@mui/material";
 import { currencyFormat } from "../../../lib/util";
-import { useFetchBasketQuery } from "../../../features/basket/basketapi";
+import { useFetchBasketQuery } from "../../../features/basket/basketApi";
 import { Item } from "../../models/basket";
 import { Link } from "react-router-dom";
 

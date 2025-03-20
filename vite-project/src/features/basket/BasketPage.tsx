@@ -1,5 +1,5 @@
 import { Grid2, Typography } from "@mui/material";
-import { useFetchBasketQuery } from "./basketapi"
+import { useFetchBasketQuery } from "./basketApi"
 import BasketItem from "./BasketItem";
 import OrderSummary from "../../app/shared/components/OrderSummary";
 

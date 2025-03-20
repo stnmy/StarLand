@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import NavBar from "./NavBar";
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 
 const getInitialDarkMode = () => {
   const storedDarkMode = localStorage.getItem('darkMode');
@@ -37,6 +37,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ScrollRestoration/>
       <CssBaseline />
       <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       <Container maxWidth={false} sx={{ mt: 15 }}>
