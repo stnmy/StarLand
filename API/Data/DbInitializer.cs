@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -14,14 +15,36 @@ namespace API.Data
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<StoreContext>()
                 ?? throw new InvalidOperationException("Failed to Retrieve Store Context");
-            SeedData(context);
+
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>()
+            ?? throw new InvalidOperationException("Failed to Retrieve User Manager");
+            SeedData(context, userManager);
         }
 
-        private static void SeedData(StoreContext context)
+        private static async Task SeedData(StoreContext context, UserManager<User> userManager)
         {
             context.Database.Migrate();
+            if (!userManager.Users.Any())
+            {
+                var user = new User
+                {
+                    UserName = "shtanmoycoc@gmail.com",
+                    Email = "shtanmoycoc@gmail.com",
+                };
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(user, "Member");
 
-            if(context.Products.Any()){
+                var admin = new User
+                {
+                    UserName = "admin@gmail.com",
+                    Email = "admin@gmail.com",
+                };
+                await userManager.CreateAsync(admin, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(admin, ["Member", "Admin"]);
+            }
+
+            if (context.Products.Any())
+            {
                 return;
             }
 

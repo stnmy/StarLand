@@ -21,7 +21,7 @@ function App() {
         main: darkMode ? "#ff4081" : "#111212"
       },
       background: {
-        default: darkMode ? "#121212" : "#F2F3F4",
+        default: darkMode ? "#121212" : "#EEEEFF",
         paper: darkMode ? "#1e1e1e" : "#ffffff"
       }
     }

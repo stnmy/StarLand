@@ -2,7 +2,9 @@ import { Brightness4, Brightness7, ShoppingCart } from "@mui/icons-material";
 import { AppBar, Toolbar, Typography, ListItem, List, Box, IconButton, Badge, LinearProgress } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/Store";
-import { useFetchBasketQuery } from "../../features/basket/basketapi";
+import { useFetchBasketQuery } from "../../features/basket/basketApi";
+import UserMenu from "./UserMenu";
+import { useUserInfoQuery } from "../../features/account/accountApi";
 
 const midLinks = [
   { Title: "Products", path: "/catalog" },
@@ -34,6 +36,7 @@ type Props = {
 };
 
 export default function NavBar({ darkMode, toggleDarkMode }: Props) {
+  const {data: user} = useUserInfoQuery();
   const {isLoading} = useAppSelector(state => state.ui);
   const {data: basket} = useFetchBasketQuery();
   const itemCount = basket?.items.reduce((sum, item) => sum+ item.quantity, 0) || 0;
@@ -69,7 +72,10 @@ export default function NavBar({ darkMode, toggleDarkMode }: Props) {
               </Badge>
           </IconButton>
 
-          <List sx={{ display: "flex" }}>
+          {user? (
+            <UserMenu user={user}/>
+          ) : (
+            <List sx={{ display: "flex" }}>
             {rightLinks.map(({ Title, path }) => (
               <ListItem
                 component={NavLink}
@@ -81,6 +87,9 @@ export default function NavBar({ darkMode, toggleDarkMode }: Props) {
               </ListItem>
             ))}
           </List>
+          )}
+
+          
         </Box>
       </Toolbar>
 
