@@ -1,4 +1,4 @@
-import { Brightness4, Brightness7, ShoppingCart } from "@mui/icons-material";
+import { ShoppingCart } from "@mui/icons-material";
 import { AppBar, Toolbar, Typography, ListItem, List, Box, IconButton, Badge, LinearProgress } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../store/Store";
@@ -35,7 +35,7 @@ type Props = {
   toggleDarkMode: () => void;
 };
 
-export default function NavBar({ darkMode, toggleDarkMode }: Props) {
+export default function NavBar() {
   const {data: user} = useUserInfoQuery();
   const {isLoading} = useAppSelector(state => state.ui);
   const {data: basket} = useFetchBasketQuery();
@@ -47,9 +47,6 @@ export default function NavBar({ darkMode, toggleDarkMode }: Props) {
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h4" component={NavLink} to={'/'} sx={navStyles} >StarLand</Typography>
          
-          <IconButton sx={{ ml: 1 }} onClick={toggleDarkMode} color="inherit">
-            {darkMode ? <Brightness7 /> : <Brightness4 />}
-          </IconButton>
         </Box>
         
         <Box sx={{ display: "flex", ml: 5 }}>

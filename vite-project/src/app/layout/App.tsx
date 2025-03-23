@@ -21,7 +21,7 @@ function App() {
         main: darkMode ? "#ff4081" : "#111212"
       },
       background: {
-        default: darkMode ? "#121212" : "#EEEEFF",
+        default: darkMode ? "#121212" : "#EDEFEF",
         paper: darkMode ? "#1e1e1e" : "#ffffff"
       }
     }
@@ -39,7 +39,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <ScrollRestoration/>
       <CssBaseline />
-      <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <NavBar/>
       <Container maxWidth={false} sx={{ mt: 15 }}>
         <Outlet />
       </Container>

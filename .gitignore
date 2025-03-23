@@ -491,3 +491,6 @@ Images/rog-swift-oled-pg39wcdm-01-500x500.png
 Images/rog-zephyrus-g16-ga605wi-01-500x500.png
 Images/surface-laptop-studio-2-01-500x500.png
 API/appsettings.json
+API/StarLand.db
+API/Data/Migrations/20250314054214_BasketEntityAdded.cs
+API/StarLand.db
