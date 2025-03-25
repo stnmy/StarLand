@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using API.Entities.OrderAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace API.Data
     {
         public required DbSet<Product> Products { get; set; }
         public required DbSet<Basket> Baskets {get; set;}
+        public required DbSet<Order> Orders {get; set;}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -7,7 +7,8 @@ import { errorApi } from "../../features/about/errorApi";
 import { basketApi } from "../../features/basket/basketApi";
 import { catalogSlice } from "../../features/catalog/CatalogSlice";
 import { accountApi } from "../../features/account/accountApi";
-import { checkoutApi } from "../../features/checkout/CheckoutApi";
+import { checkoutApi } from "../../features/checkout/checkoutApi";
+import { orderApi } from "../../features/order/orderApi";
 
 
 
@@ -18,6 +19,7 @@ export const store = configureStore({
         [basketApi.reducerPath]: basketApi.reducer,
         [accountApi.reducerPath]: accountApi.reducer,
         [checkoutApi.reducerPath]: checkoutApi.reducer,
+        [orderApi.reducerPath]: orderApi.reducer,
         counter: counterSlice.reducer,
         ui: uiSlice.reducer,
         catalog: catalogSlice.reducer
@@ -28,7 +30,8 @@ export const store = configureStore({
             errorApi.middleware,
             basketApi.middleware,
             accountApi.middleware,
-            checkoutApi.middleware)
+            checkoutApi.middleware,
+            orderApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;
