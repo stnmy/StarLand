@@ -9,6 +9,7 @@ import { setPageNumber } from "./CatalogSlice";
 export default function Catalog() {
   const productParams = useAppSelector(state => state.catalog)
   const { data, isLoading } = useFetchProductsQuery(productParams);
+  console.log(data);
   const { data: filtersData, isLoading: filtersLoading } = useFetchFiltersQuery();
   const dispatch = useAppDispatch();
 

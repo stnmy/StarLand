@@ -42,6 +42,9 @@ export default function CheckoutStepper() {
   const [createOrder] = useCreateOrderMutation();
   const { data: { name, ...restAddress } = {} as Address, isLoading } =
     useFetchAddressQuery();
+  console.log(name);
+  console.log(restAddress)
+  
   const [updateAddress] = useUpdateUserAddressMutation();
   const [saveAddressChecked, setSaveAddressChecked] = useState(false);
   const elements = useElements();

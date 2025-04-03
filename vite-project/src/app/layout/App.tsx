@@ -5,7 +5,7 @@ import { Outlet, ScrollRestoration } from "react-router-dom";
 
 const getInitialDarkMode = () => {
   const storedDarkMode = localStorage.getItem('darkMode');
-  return storedDarkMode ? JSON.parse(storedDarkMode) : true;
+  return storedDarkMode ? JSON.parse(storedDarkMode) : false;
 };
 
 function App() {
