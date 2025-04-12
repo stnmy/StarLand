@@ -45,7 +45,7 @@ export default function NavBar() {
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography variant="h4" component={NavLink} to={'/'} sx={navStyles} >StarLand</Typography>
+          <Typography variant="h4" component={NavLink} to={'/'} sx={navStyles} >StarLandDeployed</Typography>
          
         </Box>
         

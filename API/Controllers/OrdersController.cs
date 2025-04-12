@@ -14,10 +14,11 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
     [Authorize]
-    public class OrdersController(StoreContext storeContext): BaseApiController
+    public class OrdersController(StoreContext storeContext) : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<OrderDto>>> GetOrders(){
+        public async Task<ActionResult<List<OrderDto>>> GetOrders()
+        {
             var orders = await storeContext.Orders
                 .ProjectToDto()
                 .Where(x => x.BuyerEmail == User.GetUsername())
@@ -26,14 +27,14 @@ namespace API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<OrderDto>> GetOrderDetails (int id)
+        public async Task<ActionResult<OrderDto>> GetOrderDetails(int id)
         {
             var order = await storeContext.Orders
                 .ProjectToDto()
                 .Where(x => x.BuyerEmail == User.GetUsername() && id == x.Id)
                 .FirstOrDefaultAsync();
-            
-            if(order == null)
+
+            if (order == null)
             {
                 return NotFound();
             }
@@ -45,10 +46,15 @@ namespace API.Controllers
         {
             var basket = await storeContext.Baskets.GetBasketWithItems(Request.Cookies["basketId"]);
 
-            if(basket == null || basket.Items.Count==0 || string.IsNullOrEmpty(basket.PaymentIntentId)){
+            if (basket == null || basket.Items.Count == 0 || string.IsNullOrEmpty(basket.PaymentIntentId))
+            {
                 return BadRequest("Basket is empty or not found");
             }
             var items = CreateOrderItems(basket.Items);
+            if (items == null)
+            {
+                return BadRequest("One or more items in the basket are out of stock.");
+            }
             var subtotal = items.Sum(x => x.Price * x.Quantity);
             var deliveryFee = CalculateDeliveryFee(subtotal);
 
@@ -56,7 +62,7 @@ namespace API.Controllers
                 .Include(x => x.OrderItems)
                 .FirstOrDefaultAsync(x => x.PaymentIntentId == basket.PaymentIntentId);
 
-            if(order == null)
+            if (order == null)
             {
                 order = new Order
                 {
@@ -75,14 +81,14 @@ namespace API.Controllers
                 order.OrderItems = items;
             }
 
-           
+
 
             var result = await storeContext.SaveChangesAsync() > 0;
-            if(!result)
+            if (!result)
             {
                 return BadRequest("Problem Creating Order!");
             }
-            return CreatedAtAction(nameof(GetOrderDetails), new {id = order.Id}, order.ToDto());
+            return CreatedAtAction(nameof(GetOrderDetails), new { id = order.Id }, order.ToDto());
         }
 
         private long CalculateDeliveryFee(long subtotal)
@@ -94,19 +100,21 @@ namespace API.Controllers
         {
             var OrderItems = new List<OrderItem>();
 
-            foreach(var item in items){
-                if(item.Product.StockQuantity < item.Quantity)
+            foreach (var item in items)
+            {
+                if (item.Product.StockQuantity < item.Quantity)
                 {
                     return null;
                 }
-                var orderItem = new OrderItem{
+                var orderItem = new OrderItem
+                {
                     ItemOrdered = new ProductItemOrdered
                     {
                         ProductId = item.ProductId,
                         PictureUrl = item.Product.PictureUrl,
                         Name = item.Product.Name
                     },
-                    Price= item.Product.Price,
+                    Price = item.Product.Price,
                     Quantity = item.Quantity
                 };
                 OrderItems.Add(orderItem);
