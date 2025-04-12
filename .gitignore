@@ -494,4 +494,3 @@ API/appsettings.json
 API/StarLand.db
 API/Data/Migrations/20250314054214_BasketEntityAdded.cs
 API/StarLand.db
-vite-project/.env.production
