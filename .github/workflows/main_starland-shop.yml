@@ -27,7 +27,7 @@ jobs:
         run: |
           cd vite-project
           npm install
-          rpm run build
+          npm run build
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
