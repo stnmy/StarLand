@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
 builder.Services.AddTransient<ExceptionMiddleware>();
@@ -25,6 +25,8 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseCors(opt =>
 {
@@ -36,6 +38,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>();
+app.MapFallbackToController("Index", "Fallback");
 
-DbInitializer.InitDb(app);
+await DbInitializer.InitDb(app);
 app.Run();

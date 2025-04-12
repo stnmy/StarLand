@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Product } from "../../app/models/product";
 import { Link } from "react-router-dom";
-import { useAddBasketItemMutation } from "../basket/basketapi";
+import { useAddBasketItemMutation } from "../basket/basketApi";
 import { currencyFormat } from "../../lib/util";
 
 type Props = {

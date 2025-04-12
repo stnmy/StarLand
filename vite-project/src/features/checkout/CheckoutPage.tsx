@@ -5,7 +5,7 @@ import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useFetchBasketQuery } from "../basket/basketApi";
 import { useEffect, useMemo, useRef } from "react";
-import { useCreatePaymentIntentMutation } from "./CheckoutApi";
+import { useCreatePaymentIntentMutation } from "./checkoutApi";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 

@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom";
 import {Button,Divider,Grid2,Table,TableBody,TableCell,TableContainer,TableRow,TextField,Typography,} from "@mui/material";
 import { useFetchProductDetailsQuery } from "./catalogApi";
-import { useAddBasketItemMutation, useFetchBasketQuery, useRemoveBasketItemMutation } from "../basket/basketapi";
+import { useAddBasketItemMutation, useFetchBasketQuery, useRemoveBasketItemMutation } from "../basket/basketApi";
 import { ChangeEvent, useEffect, useState } from "react";
 
 export default function ProductDetails() {

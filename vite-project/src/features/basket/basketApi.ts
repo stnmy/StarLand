@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi} from "@reduxjs/toolkit/query/react";
 import { Basket, Item } from "../../app/models/basket";
 import { baseQueryWithErrorHandling } from "../../app/api/baseApi";
 import { Product } from "../../app/models/product";

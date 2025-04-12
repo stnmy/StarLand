@@ -30,10 +30,10 @@ const navStyles = {
   
 }
 
-type Props = {
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-};
+// type Props = {
+//   darkMode: boolean;
+//   toggleDarkMode: () => void;
+// };
 
 export default function NavBar() {
   const {data: user} = useUserInfoQuery();

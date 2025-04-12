@@ -9,7 +9,7 @@ const getInitialDarkMode = () => {
 };
 
 function App() {
-  const [darkMode, setDarkMode] = useState(getInitialDarkMode());
+  const [darkMode] = useState(getInitialDarkMode());
 
   const theme = createTheme({
     palette: {
@@ -27,13 +27,13 @@ function App() {
     }
   });
 
-  const toggleDarkMode = () => {
-    setDarkMode((prev: boolean) => {
-      const newMode = !prev;
-      localStorage.setItem('darkMode', JSON.stringify(newMode));
-      return newMode;
-    });
-  };
+  // const toggleDarkMode = () => {
+  //   setDarkMode((prev: boolean) => {
+  //     const newMode = !prev;
+  //     localStorage.setItem('darkMode', JSON.stringify(newMode));
+  //     return newMode;
+  //   });
+  // };
 
   return (
     <ThemeProvider theme={theme}>

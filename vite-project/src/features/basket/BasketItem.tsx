@@ -1,8 +1,8 @@
-import { Add, Close, Height, Remove } from "@mui/icons-material";
+import { Add, Close,Remove } from "@mui/icons-material";
 import { Item } from "../../app/models/basket";
-import { borderRadius, Box, display, flexbox } from "@mui/system";
-import { Button, Grid2, IconButton, Paper, Typography } from "@mui/material";
-import { useAddBasketItemMutation, useRemoveBasketItemMutation } from "./basketapi";
+import { Box} from "@mui/system";
+import {  Grid2, IconButton, Paper, Typography } from "@mui/material";
+import { useAddBasketItemMutation, useRemoveBasketItemMutation } from "./basketApi";
 import { currencyFormat } from "../../lib/util";
 
 type Props = {
